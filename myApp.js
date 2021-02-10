@@ -4,6 +4,12 @@ require("dotenv").config();
 
 app.use(express.static(`${__dirname}/public`));
 
+app.use(function middleware(req, res, next) {
+  const infoRequest = `${req.method} ${req.path} - ${req.ip}`
+  console.log(infoRequest)
+  next();
+});
+
 app.get("/", (req, res) => {
   const absolutePath = `${__dirname}/views/index.html`;
   res.sendFile(absolutePath);

@@ -1,8 +1,13 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 app.use(express.static(`${__dirname}/public`));
+
+// Use body-parser to parse requests
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Simple middleware
 app.use((req, res, next) => {
@@ -16,8 +21,9 @@ app.get("/:word/echo", (req, res) => {
   res.json({ echo: req.params.word });
 });
 
-app.route("/name")
-   //Get query parameter
+app
+  .route("/name")
+  //Get query parameter
   .get((req, res) => {
     const nameData = req.query;
     res.json({ name: `${nameData.first} ${nameData.last}` });

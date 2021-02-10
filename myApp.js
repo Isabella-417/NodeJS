@@ -11,6 +11,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Practice with routes
+app.get("/:word/echo", (req, res) => {
+  res.json({ echo: req.params.word });
+});
+
 // Chain middleware
 app.get(
   "/now",

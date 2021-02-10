@@ -28,7 +28,11 @@ app
     const nameData = req.query;
     res.json({ name: `${nameData.first} ${nameData.last}` });
   })
-  .post((req, res) => {});
+  .post((req, res) => {
+    //Post query parameter
+    const nameData = req.body;
+    res.json({ name: `${nameData.first} ${nameData.last}` });
+  });
 
 // Chain middleware
 app.get(

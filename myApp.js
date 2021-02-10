@@ -4,17 +4,31 @@ require("dotenv").config();
 
 app.use(express.static(`${__dirname}/public`));
 
-app.use(function middleware(req, res, next) {
-  const infoRequest = `${req.method} ${req.path} - ${req.ip}`
-  console.log(infoRequest)
+// Simple middleware
+app.use((req, res, next) => {
+  const infoRequest = `${req.method} ${req.path} - ${req.ip}`;
+  console.log(infoRequest);
   next();
 });
+
+// Chain middleware
+app.get(
+  "/now",
+  (req, res, next) => {
+    req.time = new Date().toString();
+    next();
+  },
+  (req, res) => {
+    res.json({ time: req.time });
+  }
+);
 
 app.get("/", (req, res) => {
   const absolutePath = `${__dirname}/views/index.html`;
   res.sendFile(absolutePath);
 });
 
+// Testing env variables
 app.get("/json", (req, res) => {
   let obj = { message: "Hello json" };
   if (process.env.MESSAGE_STYLE === "uppercase") {

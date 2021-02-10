@@ -16,6 +16,14 @@ app.get("/:word/echo", (req, res) => {
   res.json({ echo: req.params.word });
 });
 
+app.route("/name")
+   //Get query parameter
+  .get((req, res) => {
+    const nameData = req.query;
+    res.json({ name: `${nameData.first} ${nameData.last}` });
+  })
+  .post((req, res) => {});
+
 // Chain middleware
 app.get(
   "/now",
